@@ -3,7 +3,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
 
-// Generate a salt.
+// Generate a salt. This is needed for hashing the password
 var salt = bCrypt.genSaltSync(10);
 
 module.exports = function (passport) {
@@ -17,7 +17,7 @@ module.exports = function (passport) {
     // local signup =====================================================
     // ==================================================================
     passport.use('local-signup', new LocalStrategy({
-        // allows to pass back the request to the callback
+        // this allows to pass back the request to the callback
         passReqToCallback: true
     },
 
@@ -28,13 +28,13 @@ module.exports = function (passport) {
                 User.findOne({ 'username' :  username }, function (err, user) {
                     // in case of any error, return using the done method
                     if (err) {
-                        console.log('Error in SignUp: ' + err);
+                        console.log('Signup error: ' + err);
                         return done(err);
                     }
                     // check if a user with that username already exists
                     if (user) {
-                        console.log('User already exists with username: ' + username);
-                        return done(null, false, req.flash('message', 'User Already Exists'));
+                        console.log('Username already exists: ' + username);
+                        return done(null, false, req.flash('message', 'Username already exists.'));
                     }
                     // (else) if there is no user with that username create the user
                     var newUser = new User();
@@ -49,7 +49,7 @@ module.exports = function (passport) {
                     // save the user
                     newUser.save(function (err) {
                         if (err) {
-                            console.log('Error in Saving user: ' + err);
+                            console.log('Saving Error: ' + err);
                             throw err;
                         }
                         console.log('User Registration successful');
@@ -57,8 +57,7 @@ module.exports = function (passport) {
                     });
                 });
             };
-            /* Delay the execution of findOrCreateUser and execute the method
-             * in the next tick of the event loop (asynchronous) */
+            // asynchronous
             process.nextTick(findOrCreateUser);
         }));
 

@@ -1,9 +1,8 @@
 'use strict';
 var login = require('./login');
 var signup = require('./signup');
-
 // load the user model
-var User = require('../models/user');
+var User = require('mongoose').model('User');
 
 module.exports = function (passport) {
 

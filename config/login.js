@@ -19,25 +19,30 @@ module.exports = function (passport) {
 
         //
         function (req, username, password, done) {
-            // check in mongo if user already exists or not
-            User.findOne({'username': username},
-                function (err, user) {
-                    // if there is an error, return the error first
-                    if (err) {
-                        return done(err);
-                    }
-                    // if the username does not exist, log the error and redirect back
-                    if (!user) {
-                        console.log('User not found with username: ' + username);
-                        return done(null, false, req.flash('message', 'User not found.'));
-                    }
-                    if (!isValidPassword(user, password)) {
-                        console.log('Invalid Password');
-                        // redirect back to login page
-                        return done(null, false, req.flash('message', 'Invalid Password'));
-                    }
-                    // if everything goes well, return the user
-                    return done(null, user);
-                });
+
+            // asynchronous
+            process.nextTick(function () {
+                // check in mongo if user already exists or not
+                User.findOne({'username': username},
+                    function (err, user) {
+                        // if there is an error, return the error first
+                        if (err) {
+                            return done(err);
+                        }
+                        // if the username does not exist, log the error and redirect back
+                        if (!user) {
+                            console.log('User not found with username: ' + username);
+                            return done(null, false, req.flash('message', 'User not found.'));
+                        }
+                        if (!isValidPassword(user, password)) {
+                            console.log('Invalid Password');
+                            // redirect back to login page
+                            return done(null, false, req.flash('message', 'Wrong Password.'));
+                        }
+                        // if everything goes well, return the user
+                        console.log('Login successful.');
+                        return done(null, user);
+                    });
+            });
         }));
 };

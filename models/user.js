@@ -1,18 +1,29 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var userSchema = mongoose.Schema({
+var UserSchema = mongoose.Schema({
     id: Number,
-    username: String,
-    password: String,
-    email: String,
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true},
     firstName: String,
     lastName: String
 });
 
-var User = mongoose.model('User', userSchema);
+UserSchema.methods.generateHash = function(password) {
+    return bCrypt.hashSync(password, genSaltSync(10), null);
+};
+
+UserSchema.methods.validPassword = function(password) {
+    return bCrypt.compareSync(password, this.password);
+};
+
+var User = mongoose.model('User', UserSchema);
+
+module.exports = User;
 
 // Initial seed data
+/*
 User.find(function (err, users) {
 
     if (users.length) {
@@ -28,8 +39,7 @@ User.find(function (err, users) {
         lastName: 'test'
     }).save();
 });
-
-module.exports = User;
+*/
 
 /* :TODO
  * default Highscore
