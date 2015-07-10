@@ -13,17 +13,23 @@ module.exports = function (passport) {
     // local login ======================================================
     // ==================================================================
     passport.use('local-login', new LocalStrategy({
-        // this allows to pass in the req from the route
-        passReqToCallback: true
+            // change the default local strategy, which expects username and password
+            usernameField: 'email',
+            passwordField: 'password',
+            // this allows to pass in the req from the route
+            passReqToCallback: true
     },
 
         //
-        function (req, username, password, done) {
+        function (req, email, password, done) {
+
+            if (email)
+                email = email.toLowerCase();
 
             // asynchronous
             process.nextTick(function () {
                 // check in mongo if user already exists or not
-                User.findOne({'username': username},
+                User.findOne({'email': email},
                     function (err, user) {
                         // if there is an error, return the error first
                         if (err) {
@@ -31,8 +37,8 @@ module.exports = function (passport) {
                         }
                         // if the username does not exist, log the error and redirect back
                         if (!user) {
-                            console.log('User not found with username: ' + username);
-                            return done(null, false, req.flash('message', 'User not found.'));
+                            console.log('User not found with email: ' + email);
+                            return done(null, false, req.flash('message', 'Email not found.'));
                         }
                         if (!isValidPassword(user, password)) {
                             console.log('Invalid Password');

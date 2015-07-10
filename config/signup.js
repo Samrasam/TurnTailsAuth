@@ -17,15 +17,18 @@ module.exports = function (passport) {
     // local signup =====================================================
     // ==================================================================
     passport.use('local-signup', new LocalStrategy({
-        // this allows to pass back the request to the callback
+        // change the default local strategy, which expects username and password
+        usernameField: 'email',
+        passwordField: 'password',
+        // this allows to pass in the req from the route
         passReqToCallback: true
     },
 
-        function (req, username, password, done) {
+        function (req, email, password, done) {
 
             var findOrCreateUser = function () {
                 // find a user in Mongo with provided username
-                User.findOne({ 'username' :  username }, function (err, user) {
+                User.findOne({ 'email' :  email }, function (err, user) {
                     // in case of any error, return using the done method
                     if (err) {
                         console.log('Signup error: ' + err);
@@ -33,8 +36,8 @@ module.exports = function (passport) {
                     }
                     // check if a user with that username already exists
                     if (user) {
-                        console.log('Username already exists: ' + username);
-                        return done(null, false, req.flash('message', 'Username already exists.'));
+                        console.log('Email already exists: ' + email);
+                        return done(null, false, req.flash('message', 'Email is already taken.'));
                     }
                     // (else) if there is no user with that username create the user
                     var newUser = new User();

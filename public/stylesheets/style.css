@@ -6,3 +6,25 @@ body {
 a {
   color: #00B7FF;
 }
+
+.login-title {
+  color: #555555;
+  font-size: 18px;
+  font-weight: 400;
+  display: block;
+}
+
+.app-img {
+  margin: 10px 0 10px 0;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.account-wall {
+  border: 1px solid;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}

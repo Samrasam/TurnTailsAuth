@@ -42,7 +42,7 @@ User.find(function (err, users) {
 */
 
 /* :TODO
- * default Highscore
+ * Highscore
  * Avatar
  *  - Head
  *  - Body
