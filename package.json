@@ -1,11 +1,14 @@
 {
   "name": "TurnTailsAuth",
+  "description": "A small user management application for studying purposes.",
   "version": "0.0.1",
+  "author": "Robert Donderer",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "angular": "^1.4.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.12.4",
     "connect-flash": "^0.1.1",

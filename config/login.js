@@ -13,14 +13,13 @@ module.exports = function (passport) {
     // local login ======================================================
     // ==================================================================
     passport.use('local-login', new LocalStrategy({
-            // change the default local strategy, which expects username and password
-            usernameField: 'email',
-            passwordField: 'password',
-            // this allows to pass in the req from the route
-            passReqToCallback: true
+        // change the default local strategy, which expects username and password
+        usernameField: 'email',
+        passwordField: 'password',
+        // this allows to pass in the req from the route
+        passReqToCallback: true
     },
 
-        //
         function (req, email, password, done) {
 
             if (email)

@@ -1,22 +1,30 @@
 extends layout
 block content
-    div.container
+    div.container(data-ng-controller='indexCtrl')
         div.row
-            div.col-sm-6.col-md-4.col-md-offset-4
-                div.login-wall
-                    h1.text-center.login-title Sign in to your <b>Turn Tails</b> Account
-                        img(class='app-img', src='https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-circle-128.png')
-                        //img(class='app-img', src='https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-id-128.png')
-                        form(class='form-signin', action='/login', method='post')
-                            div(class='input-group')
-                                div(class='input-group-addon') @
-                                input(type='text', name='email' class='form-control', placeholder='Email',required, autofocus)
-                            div(class='input-group')
-                                div(class='input-group-addon') ***
-                                input(type='password', name='password' class='form-control', placeholder='Password', required)
-                            button(class='btn btn-lg btn-primary', type='submit') Sign in
-                            span.clearfix
-                        a(href='/signup', class='text-center new-account') Create new account
-                    #message
+            div.col-xs-12.col-sm-8.col-sm-offset-2.col-md-4.col-md-offset-4
+                h1.text-center.title Login
+                div.content-wall
+                    img(class='app-img', src='https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-circle-128.png')
+                    br
                     if message
-                        h1.text-center.error-message #{message}
+                        span.text-center.text-danger #{message}
+                    form.form-signin(action='/login', method='post')
+                        div.form-group
+                            div.input-group
+                                div.input-group-addon
+                                    i.glyphicon.glyphicon-user.text-muted
+                                input(type='text', name='email' class='form-control', placeholder='Email', required, autofocus)
+                        div.form-group
+                            div.input-group
+                                div.input-group-addon
+                                    i.glyphicon.glyphicon-asterisk.text-muted
+                                input(type='password', name='password' class='form-control', placeholder='Password', required)
+                        br
+                        div.form-group
+                            button(class='btn btn-success btn-block', type='submit') Sign in
+                    span.clearfix
+                    div
+                        a(href='/forgot') Forgot Password
+                        | &nbsp or &nbsp
+                        a(href='/signup') Register

@@ -5,7 +5,7 @@ var UserSchema = mongoose.Schema({
     id: Number,
     username: { type: String, required: true },
     password: { type: String, required: true },
-    email: { type: String, required: true},
+    email: { type: String, required: true, unique: true },
     firstName: String,
     lastName: String,
     avatars: [Number]
@@ -17,6 +17,14 @@ UserSchema.methods.generateHash = function(password) {
 
 UserSchema.methods.validPassword = function(password) {
     return bCrypt.compareSync(password, this.password);
+};
+
+UserSchema.methods.comparePassword = function(userPassword,cb) {
+    bCrypt.compare(userPassword, this.password, function(err, isMatch) {
+        if (err)
+            return cb(err);
+        cb(null, isMatch);
+    })
 };
 
 var User = mongoose.model('User', UserSchema);

@@ -1,6 +1,7 @@
 'use strict';
 var login = require('./login');
 var signup = require('./signup');
+var forgot = require('./forgot');
 // load the user model
 var User = require('mongoose').model('User');
 
@@ -26,5 +27,6 @@ module.exports = function (passport) {
     // Passport Strategies setup for login and signup
     login(passport);
     signup(passport);
+    forgot(passport);
 
 };

@@ -1,0 +1,44 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.body {
+  background-color: lightgray;
+}
+
+a {
+  color: lightblue;
+}
+
+.title {
+  color: gray;
+  font-size: 24px;
+  font-weight: 400;
+  display: block;
+}
+
+.app-img {
+  margin: 0 auto 10px;
+  display: block;
+}
+
+.content-wall {
+  background-color: #fff;
+  border: 15px solid #fff;
+  border-radius: 5px;;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.avatar-details {
+
+}
+
+.avatar-wall {
+  background-color: #fff;
+  border: 15px solid #fff;
+  border-radius: 5px;;
+  padding: 20px;
+  margin-top: 20px;
+}
