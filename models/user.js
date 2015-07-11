@@ -7,7 +7,8 @@ var UserSchema = mongoose.Schema({
     password: { type: String, required: true },
     email: { type: String, required: true},
     firstName: String,
-    lastName: String
+    lastName: String,
+    avatars: [Number]
 });
 
 UserSchema.methods.generateHash = function(password) {
@@ -36,7 +37,8 @@ User.find(function (err, users) {
         password: '$2a$10$/ZclOMJrtWIiwW9dumsFtedpJ/eQlzjxRP/JmDbq2dVwYEhEGbhqi', // password 'test' with correct hash
         email: 'test@test.de',
         firstName: 'test',
-        lastName: 'test'
+        lastName: 'test',
+        avatars: 1
     }).save();
 });
 */

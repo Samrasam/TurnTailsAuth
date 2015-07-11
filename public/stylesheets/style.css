@@ -7,6 +7,10 @@ a {
   color: #00B7FF;
 }
 
+h1 {
+  display: block;
+}
+
 .login-title {
   color: #555555;
   font-size: 18px;
@@ -22,7 +26,29 @@ a {
   margin: 10px;
 }
 
-.account-wall {
+.login-wall {
+  border: 1px solid;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.profile-wall {
+  border: 1px solid;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.avatar-details {
+  width: 100%;
+}
+
+.btn-li {
+
+}
+
+.avatar-wall {
   border: 1px solid;
   padding: 10px;
   margin: 10px;
