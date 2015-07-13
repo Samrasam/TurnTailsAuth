@@ -1,7 +1,10 @@
 'use strict';
-var LocalStrategy = require('passport-local').Strategy;
-var User = require('../models/user');
-var bCrypt = require('bcrypt-nodejs');
+// dependencies
+var LocalStrategy = require('passport-local').Strategy,
+    bCrypt = require('bcrypt-nodejs');
+
+//load user model
+var User = require('../../models/user');
 
 module.exports = function (passport) {
 
@@ -34,11 +37,12 @@ module.exports = function (passport) {
                         if (err) {
                             return done(err);
                         }
-                        // if the username does not exist, log the error and redirect back
+                        // if the username does not exist, return false and an error message
                         if (!user) {
                             console.log('User not found with email: ' + email);
                             return done(null, false, req.flash('message', 'Email not found.'));
                         }
+                        // if the given password does not match with the users one, return false and an error message
                         if (!isValidPassword(user, password)) {
                             console.log('Invalid Password');
                             // redirect back to login page

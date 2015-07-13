@@ -1,0 +1,18 @@
+extends ../layout
+block content
+    div.container
+        div.row
+            div.col-xs-12.col-sm-8.col-sm-offset-2.col-md-4.col-md-offset-4
+                h1.text-center.title Avatar: #{avatar.name}
+                div.content-wall
+                    div.row
+                        div.col-xs-4
+                            ul
+                                img.img-responsive(src='../img/avatarhead_#{avatar.head}.svg')
+                                img.img-responsive(src='../img/avatarbody_#{avatar.body}.svg')
+                                img.img-responsive(src='../img/avatartail_#{avatar.tail}.svg')
+                        div.col-xs-8
+                            p Name: #{avatar.name}
+                            p Score: #{avatar.score}
+                    form(method='get', action='/avatars/#{avatar._id}/edit')
+                        button.btn.btn-warning.btn-block Edit

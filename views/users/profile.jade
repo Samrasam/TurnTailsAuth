@@ -1,0 +1,56 @@
+extends ../layout
+
+block content
+    div.container
+        div.row
+            div.col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+                h1.text-center.title Welcome #{user.firstName}.
+                div.content-wall
+                    div.list-group
+                        li.list-group-item
+                            //button.btn.btn-primary(type="button" style="float: right") Change username
+                            h4.list-group-item-heading Username:
+                            p.list-group-item-text #{user.username}
+                        li.list-group-item
+                            //button.btn.btn-primary(type="button" style="float: right") Change email
+                            h4.list-group-item-heading Email:
+                            p.list-group-item-text #{user.email}
+                        li.list-group-item
+                            h4.list-group-item-heading First Name:
+                            p.list-group-item-text #{user.firstName}
+                        li.list-group-item
+                            h4.list-group-item-heading Last Name:
+                            p.list-group-item-text #{user.lastName}
+                        li.list-group-item
+                            //button.btn.btn-primary(type="button" style="float: right") Change password
+                            h4.list-group-item-heading Password:
+                            p.list-group-item-text *****
+                    a.btn.btn-primary(href='/logout', class='text-center') Logout
+
+                h1.text-center.title Your Avatars
+            div.col-xs-12.col-sm-12.col-md-12
+                - each avatar, i in avatars
+                    div.col-xs-12.col-sm-6.col-md-4
+                        div.content-wall
+                            div.row
+                                div.col-xs-4
+                                    img.img-responsive(src='../img/avatarhead_#{avatar.head}.svg')
+                                    img.img-responsive(src='../img/avatarbody_#{avatar.body}.svg')
+                                    img.img-responsive(src='../img/avatartail_#{avatar.tail}.svg')
+                                div.col-xs-6.col-xs-offset-2
+                                    p Name: #{avatar.name}
+                                    p Score: #{avatar.score}
+                            div.row
+                                form(method='get', action='/avatars/#{avatar._id}/edit').col-xs-12.col-sm-6.col-md-6
+                                    button.btn.btn-primary.btn-block Edit
+                                form(method='post', action='/avatars/#{avatar._id}/edit').col-xs-12.col-sm-6.col-md-6
+                                    input(type='hidden',value='delete',name='_method')
+                                    button.btn.btn-danger.btn-block Delete
+
+                div.col-xs-12.col-sm-6.col-md-4
+                    div.content-wall
+                        p.text-center Create new Avatar
+                        form.input-group(name='addavatar', method='post', action='/profile')
+                            input.form-control(type='text', name='avatarName', placeholder='Avatar Name',required)
+                            span.input-group-btn
+                                button.btn.btn-success(type="submit") Create

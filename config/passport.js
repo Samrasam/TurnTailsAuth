@@ -1,7 +1,7 @@
 'use strict';
-var login = require('./login');
-var signup = require('./signup');
-var forgot = require('./forgot');
+var login = require('./strategies/login');
+var signup = require('./strategies/signup');
+var forgot = require('./strategies/forgot');
 // load the user model
 var User = require('mongoose').model('User');
 
@@ -12,14 +12,14 @@ module.exports = function (passport) {
 
     // serializes user
     passport.serializeUser(function (user, done) {
-        console.log('serializing user: ', user);
+        //console.log('serializing user: ', user);
         done(null, user._id);
     });
 
     // deserializes user
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, user) {
-            console.log('deserializing user:', user);
+            //console.log('deserializing user:', user);
             done(err, user);
         });
     });

@@ -1,6 +1,6 @@
 'use strict';
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('mongoose').model('User');
+var User = require('../../models/user');
 var bCrypt = require('bcrypt-nodejs');
 
 module.exports = function (passport) {

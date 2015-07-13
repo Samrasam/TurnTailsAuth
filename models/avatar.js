@@ -3,10 +3,19 @@ var mongoose = require('mongoose');
 
 var AvatarSchema = mongoose.Schema({
     id: Number,
+    name: {
+        type: String,
+        default: 'MyAvatar',
+        trim: true
+    },
     head: Number,
     body: Number,
     tail: Number,
-    score: Number
+    score: Number,
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+    }
 });
 
 var Avatar = mongoose.model('Avatar', AvatarSchema);

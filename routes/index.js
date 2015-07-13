@@ -1,7 +1,12 @@
 'use strict';
-var express = require('express');
-var router = express.Router();
+// dependencies
+var express = require('express'),
+    router = express.Router(),
+    mongoose = require('mongoose');
 
+var Avatar = require('../models/avatar');
+
+// standard passport function
 var ensureAuthenticated = function (req, res, next) {
   // route middleware to ensure that only authenticated users can log in
   if (req.isAuthenticated()) {
@@ -13,7 +18,6 @@ var ensureAuthenticated = function (req, res, next) {
       res.redirect('/');
   }
 };
-
 
 // function used to reset the password if forgotten
 var passwordReset = function (req, res, next) {
@@ -30,15 +34,48 @@ var passwordReset = function (req, res, next) {
 
 module.exports = function (passport) {
 
-  // home page
+  // index route ====================================================
   router.get('/', function (req, res) {
     res.render('index', { message: req.flash('message') });
   });
 
-  // profile page
-  router.get('/profile', ensureAuthenticated, function (req, res) {
-    res.render('profile', { user: req.user })
-  });
+  // ================================================================
+  // profile routes =================================================
+  // ================================================================
+  router.route('/profile')
+      .get(ensureAuthenticated, function (req, res) {
+        mongoose.model('Avatar').find({'user': req.user._id}, null, {}, function (err, avatars) {
+      if (err) {
+        console.log('No Avatars were found');
+      } else {
+        res.render('users/profile', { user: req.user, 'avatars': avatars})
+      }
+    })
+  })
+
+      .post(function (req, res, done) {
+
+        var newAvatar = new Avatar();
+
+        newAvatar.name = req.body.avatarName;
+        newAvatar.head = 1;
+        newAvatar.body = 1;
+        newAvatar.tail = 1;
+        // score gets randomly created to simulate a achieved highscore
+        newAvatar.score = Math.floor((Math.random() * 100) + 1);
+        newAvatar.user = req.user._id;
+
+        // save the user
+        newAvatar.save(function (err) {
+          if (err) {
+            console.log('Saving Error: ' + err);
+            throw err;
+          }
+          console.log('POST creating new avatar: ' + newAvatar);
+          return done(null, newAvatar);
+        });
+        res.redirect('/profile');
+      });
 
   // logout => redirect to home page
   router.get('/logout', function (req, res) {
@@ -47,51 +84,38 @@ module.exports = function (passport) {
   });
 
   // login ==========================================================
-  router.post('/login',
-      passport.authenticate('local-login', {
+  router.route('/login')
+      .post(passport.authenticate('local-login', {
         successRedirect: '/profile',
         failureRedirect: '/',
         failureFlash: true
       }));
 
   // signup ==========================================================
-  router.get('/signup', function (req, res) {
-    res.render('signup', { message: req.flash('message') })
-  });
-
-  router.post('/signup',
-      passport.authenticate('local-signup', {
+  router.route('/signup')
+      .get(function (req, res) {
+        res.render('users/signup', { message: req.flash('message'), title: "Register" })
+      })
+      .post(passport.authenticate('local-signup', {
         successRedirect: '/profile',
         failureRedirect: '/signup',
         failureFlash: true
       }));
 
   // forgot password ================================================
-  router.get('/forgot', function(req, res) {
-    res.render('forgot', {message: req.flash('message') })
-  });
+  router.route('/forgot')
+      .get(function(req, res) {
+        res.render('users/forgot', {message: req.flash('message') })
+      })
 
-  router.post('/forgot', passport.authenticate('local-forgot', {
-    successRedirect: '/reset/:token',
-    failureRedirect: '/forgot',
-    failureFlash: true
-  }));
+      .post(passport.authenticate('local-forgot', {
+        successRedirect: '/reset/:token',
+        failureRedirect: '/forgot',
+        failureFlash: true
+      }));
 
   router.get('/reset/:token', passwordReset, function(req, res) {
-    res.render('reset', {user: req.user})
-  });
-
-  // tests ==========================================================
-  var Avatar = require('../models/avatar');
-
-  // route to test how many avatars currently exist in the database
-  router.get('/api/avatars', function (req, res) {
-    Avatar.find(function (err, avatars) {
-      if (err) {
-        res.send(err);
-      }
-      res.json(avatars);
-    })
+    res.render('users/reset', {user: req.user})
   });
 
   // route to test if a user is logged in or not

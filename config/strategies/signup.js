@@ -1,7 +1,10 @@
 'use strict';
-var LocalStrategy = require('passport-local').Strategy;
-var User = require('../models/user');
-var bCrypt = require('bcrypt-nodejs');
+// dependencies
+var LocalStrategy = require('passport-local').Strategy,
+    bCrypt = require('bcrypt-nodejs');
+
+//load user model
+var User = require('../../models/user');
 
 // Generate a salt. This is needed for hashing the password
 var salt = bCrypt.genSaltSync(10);

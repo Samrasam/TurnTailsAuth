@@ -1,0 +1,27 @@
+extends ../layout
+block content
+    div.container
+        div.row
+            div.col-xs-12.col-sm-8.col-sm-offset-2.col-md-4.col-md-offset-4
+                h1.text-center.title #{title}
+                - each avatar, i in avatars
+                    div.content-wall
+                        div.row
+                            div.col-xs-4
+                                img.img-responsive(src='../img/avatarhead_#{avatar.head}.svg')
+                                img.img-responsive(src='../img/avatarbody_#{avatar.body}.svg')
+                                img.img-responsive(src='../img/avatartail_#{avatar.tail}.svg')
+                            div.col-xs-6.col-xs-offset-2
+                                p Name: #{avatar.name}
+                                //p Head: #{avatar.head}
+                                //p Body: #{avatar.body}
+                                //p Tail: #{avatar.tail}
+                                p Score: #{avatar.score}
+                        //div.container-fluid
+                        //    div.col-xs-6
+                        //        form(method='get', action='/avatars/#{avatar._id}/edit')
+                        //            button.btn.btn-warning.btn-block Edit
+                        //    div.col-xs-6
+                        //        form(action='/avatars/#{avatar._id}/edit',method='post')
+                        //            input(type='hidden',value='delete',name='_method')
+                        //            button.btn.btn-danger.btn-block Delete

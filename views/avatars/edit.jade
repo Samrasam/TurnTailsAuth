@@ -1,0 +1,42 @@
+extends ../layout
+
+block content
+    div.container
+        div.row
+            div.col-xs-12.col-sm-8.col-sm-offset-2.col-lg-4.col-lg-offset-4
+                h1.text-center.title Edit avatar #{avatar.name}
+                div.content-wall
+                    form(action='/avatars/#{avatar._id}/edit', method='post', name='updateAvatar')
+                        div.row
+                            div.col-xs-4
+                                img.img-responsive(src='/img/avatarhead_#{avatar.head}.svg')
+                                img.img-responsive(src='/img/avatarbody_#{avatar.body}.svg')
+                                img.img-responsive(src='/img/avatartail_#{avatar.tail}.svg')
+                            div.col-xs-8
+                                label(for='inputName') Name:
+                                input#inputname.form-control(type='String', value='#{avatar.name}', name='name')
+                                br
+                                div.dropdown
+                                    button#dropdownhead.btn.btn-default.btn-block.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true') Head
+                                        span.caret
+                                    ul.dropdown-menu(aria-labelledby='dropdownhead')
+                                        li
+                                            a(href='#') nix
+                                        li
+                                            img(src='/img/avatarhead_1.svg')
+                                        li
+                                            img(src='/img/avatarhead_2.svg')
+                                        li
+                                            img(src='/img/avatarhead_3.svg')
+                                br
+                                label(for='inputHead') Head:
+                                input#inputHead.form-control(type='Number', value='#{avatar.head}', name='head', min='1', max='3')
+                                br
+                                label(for='inputBody') Body:
+                                input#inputBody.form-control(type='Number', value='#{avatar.body}', name='body', min='1', max='3')
+                                br
+                                label(for='inputTail') Tail:
+                                input#inputTail.form-control(type='Number', value='#{avatar.tail}', name='tail', min='1', max='3')
+                                br
+                        input(type='hidden',value='put',name='_method')
+                        button.btn.btn-success.btn-block(type='submit') Save
