@@ -9,7 +9,7 @@ block content
                         span.text-center.text-danger #{message}
                     form.form-signup(action='/signup', method='POST')
                         div.form-group
-                            input(type='text', name='username', class='form-control', placeholder='Username',required, autofocus)
+                            input(type='text', name='username', class='form-control', placeholder='Username',required, autofocus, autocomplete='off')
                         div.form-group
                             input(type='password', name='password', class='form-control nomargin', placeholder='Password', required)
                         div.form-group

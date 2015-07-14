@@ -16,27 +16,14 @@ block content
                                 label(for='inputName') Name:
                                 input#inputname.form-control(type='String', value='#{avatar.name}', name='name')
                                 br
-                                div.dropdown
-                                    button#dropdownhead.btn.btn-default.btn-block.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true') Head
-                                        span.caret
-                                    ul.dropdown-menu(aria-labelledby='dropdownhead')
-                                        li
-                                            a(href='#') nix
-                                        li
-                                            img(src='/img/avatarhead_1.svg')
-                                        li
-                                            img(src='/img/avatarhead_2.svg')
-                                        li
-                                            img(src='/img/avatarhead_3.svg')
-                                br
                                 label(for='inputHead') Head:
-                                input#inputHead.form-control(type='Number', value='#{avatar.head}', name='head', min='1', max='3')
+                                input#inputHead.form-control(type='Number', value='#{avatar.head}', name='head', min='1', max='#{maxSkins}')
                                 br
                                 label(for='inputBody') Body:
-                                input#inputBody.form-control(type='Number', value='#{avatar.body}', name='body', min='1', max='3')
+                                input#inputBody.form-control(type='Number', value='#{avatar.body}', name='body', min='1', max='#{maxSkins}')
                                 br
                                 label(for='inputTail') Tail:
-                                input#inputTail.form-control(type='Number', value='#{avatar.tail}', name='tail', min='1', max='3')
+                                input#inputTail.form-control(type='Number', value='#{avatar.tail}', name='tail', min='1', max='#{maxSkins}')
                                 br
                         input(type='hidden',value='put',name='_method')
                         button.btn.btn-success.btn-block(type='submit') Save

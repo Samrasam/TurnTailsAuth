@@ -10,6 +10,8 @@ var UserSchema = mongoose.Schema({
     lastName: String
 });
 
+// TODO: not in use delete before finish
+/*
 UserSchema.methods.generateHash = function(password) {
     return bCrypt.hashSync(password, genSaltSync(10), null);
 };
@@ -25,6 +27,7 @@ UserSchema.methods.comparePassword = function(userPassword,cb) {
         cb(null, isMatch);
     })
 };
+*/
 
 var User = mongoose.model('User', UserSchema);
 

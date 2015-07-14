@@ -32,9 +32,9 @@ router.route('/')
                 res.render('avatars/index', {title: 'All Avatars', 'avatars': avatars});
             }
         })
-    })
+    });
     // create new avatar
-    .post(function (req, res, done) {
+/*    .post(function (req, res, done) {
 
         var newAvatar = new Avatar();
 
@@ -43,7 +43,7 @@ router.route('/')
         newAvatar.body = 1;
         newAvatar.tail = 1;
         // score gets randomly created to simulate a achieved highscore
-        newAvatar.score = Math.floor((Math.random() * 100) + 1);
+        newAvatar.score = Math.floor((Math.random() * 1000) + 1);
         newAvatar.user = req.user._id;
 
         // save the user
@@ -52,10 +52,10 @@ router.route('/')
                 console.log('Saving Error: ' + err);
                 throw err;
             }
-            console.log('POST creating new avatar: ' + newAvatar);
+            //console.log('POST created new avatar: ' + newAvatar);
             return done(null, newAvatar);
         });
-    });
+    });*/
 
 // route middleware to validate :id
 router.param('id', function(req, res, next, id) {
@@ -104,29 +104,30 @@ router.route('/:id/edit')
             } else {
                 //Return the avatar
                 console.log('GET Retrieving ID: ' + avatar._id);
-                        res.render('avatars/edit', {
-                            'avatar' : avatar
-                        });
+                res.render('avatars/edit', {
+                    'avatar' : avatar,
+                    maxSkins : avatar.maxSkins(avatar)
+                });
             }
         });
     })
     //PUT to update avatar by ID
     .put(function(req, res) {
         // Get our REST or form values. These rely on the "name" attributes
-        var name = req.body.name;
-        var head = req.body.head;
-        var body = req.body.body;
-        var tail = req.body.tail;
+        var newName = req.body.name;
+        var newHead = req.body.head;
+        var newBody = req.body.body;
+        var newTail = req.body.tail;
 
         //find the document by ID
         mongoose.model('Avatar').findById(req.id, function (err, avatar) {
             //update it
             avatar.update({
-                name : name,
-                head : head,
-                body : body,
-                tail : tail
-            }, function (err, avatarID) {
+                name : newName,
+                head : newHead,
+                body : newBody,
+                tail : newTail
+            }, function (err) {
                 if (err) {
                     req.flash('error', 'There was a problem updating the information to the database.');
                 }

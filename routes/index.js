@@ -46,7 +46,7 @@ module.exports = function (passport) {
       .get(ensureAuthenticated, function (req, res) {
         mongoose.model('Avatar').find({'user': req.user._id}, null, {}, function (err, avatars) {
       if (err) {
-        console.log('No Avatars were found');
+        console.log('Database error: ' + err);
       } else {
         res.render('users/profile', { user: req.user, 'avatars': avatars})
       }
@@ -62,7 +62,8 @@ module.exports = function (passport) {
         newAvatar.body = 1;
         newAvatar.tail = 1;
         // score gets randomly created to simulate a achieved highscore
-        newAvatar.score = Math.floor((Math.random() * 100) + 1);
+        // hardcap of 400 for demonstration purposes;
+        newAvatar.score = Math.floor(Math.random() * 400);
         newAvatar.user = req.user._id;
 
         // save the user
@@ -71,7 +72,7 @@ module.exports = function (passport) {
             console.log('Saving Error: ' + err);
             throw err;
           }
-          console.log('POST creating new avatar: ' + newAvatar);
+          //console.log('POST created new avatar: ' + newAvatar);
           return done(null, newAvatar);
         });
         res.redirect('/profile');
@@ -117,12 +118,6 @@ module.exports = function (passport) {
   router.get('/reset/:token', passwordReset, function(req, res) {
     res.render('users/reset', {user: req.user})
   });
-
-  // route to test if a user is logged in or not
-  router.get('/loggedin', function(req, res) {
-    res.send(req.isAuthenticated() ? req.user : '0');
-  });
-  // tests end ======================================================
 
   return router;
 

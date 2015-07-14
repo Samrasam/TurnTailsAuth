@@ -7,6 +7,11 @@ body {
   background-color: lightgray;
 }
 
+.app-img {
+  max-height: 156px;
+  max-width: 156px;
+}
+
 a {
   color: lightblue;
 }
