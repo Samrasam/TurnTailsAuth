@@ -2,11 +2,12 @@
 // dependencies
 var express = require('express'),
     router = express.Router(),
+    bCrypt = require('bcrypt-nodejs'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override');
 
-// load user model
+// load user model schema
 var User = require('../models/user');
 
 // every request to this controller must pass through this 'use' functions
@@ -22,6 +23,7 @@ router.use(methodOverride(function (req, res) {
 }));
 
 // standard passport function
+// copy pasted from passport documentation
 var ensureAuthenticated = function (req, res, next) {
     // route middleware to ensure that only authenticated users can log in
     if (req.isAuthenticated()) {
@@ -33,11 +35,13 @@ var ensureAuthenticated = function (req, res, next) {
         res.redirect('/');
     }
 };
-
-// references to route /users
+// ==================================================================
+// /users routes ====================================================
+// ==================================================================
+// references to route /users (shows all registered users)
 router.route('/')
     .get(function (req, res) {
-        // get all avatars from mongodb
+        // get all users from mongodb
         mongoose.model('User').find({}, null, function (err, users) {
             if (err) {
                 console.log('No Users were found.');
@@ -55,12 +59,12 @@ router.route('/update')
 router.route('/:id/update')
     // GET user by id
     .get(function (req, res) {
-        mongoose.model('User').findById(req.id, function (err, user) {
+        mongoose.model('User').findById(req.user._id, function (err, user) {
             if (err) {
                 console.log('GET Error: There was a problem retrieving: ' + err);
             }
             else {
-                console.log('GET Retrieving ID: ' + req.user._id);
+                console.log('GET Retrieving UserID: ' + req.user._id);
                 res.render('users/update', {user: req.user});
             }
         })
@@ -68,28 +72,40 @@ router.route('/:id/update')
     // PUT updated user credentials
     .put(function(req, res) {
         // Get our REST or form values. These rely on the "name" attributes
-        var newUsername = req.body.username;
+        var newUsername = req.body.newUsername;
         var oldPw = req.body.oldPw;
         var newPw = req.body.newPw;
-        var newPwCheck = req.body.newPwChek;
+        var newPwCheck = req.body.newPwCheck;
         var newEmail = req.body.newEmail;
 
-        //find the document by ID
-        mongoose.model('User').findById(req.id, function (err, user) {
-            //update it
-            user.update({
-                username : newUsername,
-                password : newPw,
-                email : newEmail
-            }, function (err) {
-                if (err) {
-                    req.flash('error', 'There was a problem updating the information to the database.');
-                }
-                else {
-                    res.redirect('/profile');
-                }
-            })
-        });
+        if (bCrypt.compareSync(oldPw, req.user.password)) {
+            if (newPw == newPwCheck) {
+                //find user by id
+                mongoose.model('User').findById(req.user.id, function (err, user) {
+                    //update found user
+                    req.user.update({
+                        username : newUsername,
+                        password : bCrypt.hashSync(newPw, bCrypt.genSaltSync(10)),
+                        email : newEmail
+                    }, function (err) {
+                        if (err) {
+                            req.flash('message', 'There was a problem updating the information to the database.');
+                        }
+                        else {
+                            res.redirect('/profile');
+                        }
+                    })
+                })
+            }
+            else {
+                req.flash('message', 'New passwords do not match.');
+                res.render('users/update', {user: req.user, message: req.flash('message') });
+            }
+        }
+        else {
+            req.flash('message', 'Old Password does not match.');
+            res.render('users/update', {user: req.user, message: req.flash('message') });
+        }
     });
 
 module.exports = router;

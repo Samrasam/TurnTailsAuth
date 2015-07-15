@@ -3,16 +3,24 @@ extends ../layout
 block content
    div.container
       div.row
-         div.col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+         div.col-xs-12.col-sm-8.col-sm-offset-2.col-md-4.col-md-offset-4
             h1.text-center.title Change credentials of #{user.username}
             div.content-wall
-               form(action='/users#{user._id}/update', method='post', name='updateUser')
+               if message
+                  span.text-center.text-danger #{message}
+               form(action='/users/#{user._id}/update', method='post', name='updateUser').place
                   label(for='updateUsername') Username:
-                  input#updateUsername.form-control(type='String', value='#{user.username}', name='username')
-                  label(for='oldPw') Password:
-                  input#oldPw.form-control(type='String', placeholder='Old password', name='oldPw' )
-                  input#oldPw.form-control(type='String', placeholder='New password', name='newPw' )
-                  input#oldPw.form-control(type='String', placeholder='New password check', name='newPwCheck' )
-               div.row
-                  a.btn.btn-primary(href='/profile') Abandon
-                  a.btn.btn-primary(href='', style='float: right') Update Credentials
+                  input#updateUsername.form-control(type='String', value='#{user.username}', name='newUsername', required)
+                  br
+                  label(for='updatePw') Password:
+                  input#updatePw.form-control.place(type='String', placeholder='Old password', name='oldPw')
+                  input#updatePw.form-control.place(type='String', placeholder='New password', name='newPw')
+                  input#updatePw.form-control.place(type='String', placeholder='New password check', name='newPwCheck')
+                  br
+                  label(for='updateEmail') Email:
+                  input#updateEmail.form-control(type='email', value='#{user.email}', name='newEmail', required)
+                  br
+                  input(type='hidden',value='put',name='_method')
+                  button.btn.btn-primary.btn-block(type='submit') Update credentials
+               form(method='get', action='/profile')
+                  button.btn.btn-primary.btn-block Abandon
