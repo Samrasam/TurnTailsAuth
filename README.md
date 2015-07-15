@@ -11,5 +11,5 @@ If you are not connected to the internet assure to have a local mongodb instance
 Steps to run the app
 ====================
 1. Install the project dependencies by running the command `npm install` in the project directory.
-2. To start the Server run `npm install` in the project directory.
+2. To start the Server run `npm start` in the project directory.
 3. Direct your browser to `http://localhost:3000`.
