@@ -20,7 +20,7 @@ var AvatarSchema = mongoose.Schema({
 
 AvatarSchema.methods.maxSkins = function (avatar) {
     // every 100 score points the player unlocks a new skin set
-    if(avatar.score >= 200) {
+    if (avatar.score >= 200) {
         return (Math.floor(avatar.score / 100));
     }
     // else return min value for basic skin
@@ -30,20 +30,3 @@ AvatarSchema.methods.maxSkins = function (avatar) {
 var Avatar = mongoose.model('Avatar', AvatarSchema);
 
 module.exports = Avatar;
-
-// Initial seed data
-/*
-Avatar.find(function (err, avatars) {
-
-    if (avatars.length) {
-        return;
-    }
-
-    new Avatar({
-        id: 1,
-        head: 1,
-        body: 1,
-        tail: 1,
-        score: 200
-    }).save();
-});*/

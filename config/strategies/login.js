@@ -22,11 +22,11 @@ module.exports = function (passport) {
         // this allows to pass in the req from the route
         passReqToCallback: true
     },
-
         function (req, email, password, done) {
 
-            if (email)
+            if (email) {
                 email = email.toLowerCase();
+            }
 
             // asynchronous
             process.nextTick(function () {

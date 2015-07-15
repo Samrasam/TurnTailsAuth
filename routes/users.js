@@ -12,7 +12,7 @@ var User = require('../models/user');
 
 // every request to this controller must pass through this 'use' functions
 // copy and pasted from method-override
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.urlencoded({extended: true}));
 router.use(methodOverride(function (req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         // look in urlencoded POST bodies and delete it
@@ -28,8 +28,7 @@ var ensureAuthenticated = function (req, res, next) {
     // route middleware to ensure that only authenticated users can log in
     if (req.isAuthenticated()) {
         return next();
-    }
-    else {
+    } else {
         console.log('Unable to authenticate user.');
         // if the user is not authenticated, redirect him to the home page
         res.redirect('/');
@@ -62,49 +61,45 @@ router.route('/:id/update')
         mongoose.model('User').findById(req.user._id, function (err, user) {
             if (err) {
                 console.log('GET Error: There was a problem retrieving: ' + err);
-            }
-            else {
+            } else {
                 console.log('GET Retrieving UserID: ' + req.user._id);
                 res.render('users/update', {user: req.user});
             }
         })
     })
     // PUT updated user credentials
-    .put(function(req, res) {
+    .put(function (req, res) {
         // Get our REST or form values. These rely on the "name" attributes
-        var newUsername = req.body.newUsername;
-        var oldPw = req.body.oldPw;
-        var newPw = req.body.newPw;
-        var newPwCheck = req.body.newPwCheck;
-        var newEmail = req.body.newEmail;
+        var newUsername = req.body.newUsername,
+            oldPw = req.body.oldPw,
+            newPw = req.body.newPw,
+            newPwCheck = req.body.newPwCheck,
+            newEmail = req.body.newEmail;
 
         if (bCrypt.compareSync(oldPw, req.user.password)) {
-            if (newPw == newPwCheck) {
+            if (newPw === newPwCheck) {
                 //find user by id
                 mongoose.model('User').findById(req.user.id, function (err, user) {
                     //update found user
                     req.user.update({
-                        username : newUsername,
-                        password : bCrypt.hashSync(newPw, bCrypt.genSaltSync(10)),
-                        email : newEmail
+                        username: newUsername,
+                        password: bCrypt.hashSync(newPw, bCrypt.genSaltSync(10)),
+                        email: newEmail
                     }, function (err) {
                         if (err) {
                             req.flash('message', 'There was a problem updating the information to the database.');
-                        }
-                        else {
+                        } else {
                             res.redirect('/profile');
                         }
-                    })
-                })
-            }
-            else {
+                    });
+                });
+            } else {
                 req.flash('message', 'New passwords do not match.');
-                res.render('users/update', {user: req.user, message: req.flash('message') });
+                res.render('users/update', {user: req.user, message: req.flash('message')});
             }
-        }
-        else {
+        } else {
             req.flash('message', 'Old Password does not match.');
-            res.render('users/update', {user: req.user, message: req.flash('message') });
+            res.render('users/update', {user: req.user, message: req.flash('message')});
         }
     });
 

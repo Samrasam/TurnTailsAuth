@@ -13,7 +13,7 @@ module.exports = function (passport) {
 
     // generate hash using bCrypt
     var createHash = function (password) {
-        return bCrypt.hashSync(password, salt)
+        return bCrypt.hashSync(password, salt);
     };
 
     // ==================================================================
