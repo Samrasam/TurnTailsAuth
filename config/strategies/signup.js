@@ -30,7 +30,7 @@ module.exports = function (passport) {
         function (req, email, password, done) {
 
             var findOrCreateUser = function () {
-                // find a user in Mongo with provided username
+                // find a user in Mongodb with provided username
                 User.findOne({ 'email' :  email }, function (err, user) {
                     // in case of any error, return using the done method
                     if (err) {
@@ -46,11 +46,11 @@ module.exports = function (passport) {
                     var newUser = new User();
 
                     // set the user's local credentials
-                    newUser.username = req.param('username');
+                    newUser.username = req.body.username;
                     newUser.password = createHash(password);
                     newUser.email = email;
-                    newUser.firstName = req.param('firstName');
-                    newUser.lastName = req.param('lastName');
+                    newUser.firstName = req.body.firstName;
+                    newUser.lastName = req.body.lastName;
 
                     // save the user
                     newUser.save(function (err) {
@@ -63,7 +63,7 @@ module.exports = function (passport) {
                     });
                 });
             };
-            // asynchronous
+            // asynchronous call
             process.nextTick(findOrCreateUser);
         }));
 

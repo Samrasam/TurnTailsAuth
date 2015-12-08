@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="styleSheet" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css">
+    <!--script(type='application/javascript', src='/js/angular.js')-->
+</head>
+<body class="body">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span
+                    class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
+                    class="icon-bar"></span></button>
+            <a class="navbar-brand">Turn Tails Account Management</a><!--ul.nav.navbar-navif user
+   li
+      a(href="/logout") Logout
+else
+   li
+      a(href="/signup") Signup--></div>
+    </div>
+</nav>
+<div ng-view>
+    <div data-ng-controller="indexCtrl" class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4"><h1 class="text-center title">
+                Login</h1>
+
+                <div class="content-wall"><img src="/img/user_blue.png" alt="Responsive image"
+                                               class="img-responsive app-img"><br>
+
+                    <form action="/login" method="post" class="form-signin">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="glyphicon glyphicon-user text-muted"></i></div>
+                                <input type="text" name="email" placeholder="Email" required autofocus
+                                       class="form-control"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="glyphicon glyphicon-asterisk text-muted"></i>
+                                </div>
+                                <input type="password" name="password" placeholder="Password" required
+                                       class="form-control"></div>
+                        </div>
+                        <br>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                        </div>
+                    </form>
+                    <span class="clearfix"></span>
+
+                    <div><a href="/forgot">Forgot Password</a>&nbsp or &nbsp<a href="/signup">Register</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

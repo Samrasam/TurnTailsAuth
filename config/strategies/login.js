@@ -31,8 +31,7 @@ module.exports = function (passport) {
             // asynchronous
             process.nextTick(function () {
                 // check in mongo if user already exists or not
-                User.findOne({'email': email},
-                    function (err, user) {
+                User.findOne({'email': email}, function (err, user) {
                         // if there is an error, return the error first
                         if (err) {
                             return done(err);

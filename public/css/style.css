@@ -1,9 +1,6 @@
-body {
+.body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-.body {
   background-color: lightgray;
 }
 
@@ -20,6 +17,10 @@ p {
   font-size: 18px;
 }
 
+label {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
 .title {
   color: gray;
   font-size: 24px;
@@ -32,16 +33,16 @@ p {
   display: block;
 }
 
+.place {
+  margin-bottom: 10px;
+}
+
 .content-wall {
   background-color: #fff;
   border: 15px solid #fff;
   border-radius: 5px;;
   padding: 20px;
   margin-top: 20px;
-}
-
-.avatar-details {
-
 }
 
 .avatar-wall {

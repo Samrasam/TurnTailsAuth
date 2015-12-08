@@ -4,7 +4,7 @@ block content
     div.container
         div.row
             div.col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
-                h1.text-center.title Welcome #{user.firstName}.
+                h1.text-center.title Welcome #{user.username}.
                 div.content-wall
                     div.list-group
                         li.list-group-item
@@ -30,7 +30,7 @@ block content
                             button.btn.btn-primary.btn-block Logout
                             br
                         form(method='get', action='/users/#{user._id}/update', style='float:right').col-xs-12.col-sm-6.col-md-4
-                            button.btn.btn-primary.btn-block Update
+                            button.btn.btn-primary.btn-block Update credentials
 
                 h1.text-center.title Your Avatars
             div.col-xs-12.col-sm-12.col-md-12
@@ -43,8 +43,11 @@ block content
                                     img.img-responsive(src='../img/avatarbody_#{avatar.body}.svg')
                                     img.img-responsive(src='../img/avatartail_#{avatar.tail}.svg')
                                 div.col-xs-6.col-xs-offset-2
-                                    p Name: #{avatar.name}
-                                    p Score: #{avatar.score}
+                                    h4.list-group-item-heading Name:
+                                    p.list-group-item-text #{avatar.name}
+                                    br
+                                    h4.list-group-item-heading Score:
+                                    p.list-group-item-text #{avatar.score}
                             div.row
                                 form(method='get', action='/avatars/#{avatar._id}/edit').col-xs-12.col-sm-6.col-md-6
                                     button.btn.btn-primary.btn-block Edit

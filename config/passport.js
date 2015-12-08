@@ -7,16 +7,15 @@ var User = require('mongoose').model('User');
 
 module.exports = function (passport) {
 
-    // Passport needs to be able to serialize and deserialize users
-    // to support persistent login sessions
+    // Passport needs to be able to serialize and deserialize users to support persistent login sessions
 
-    // serializes user
+    // serializes user (default passport function)
     passport.serializeUser(function (user, done) {
         //console.log('serializing user: ', user);
         done(null, user._id);
     });
 
-    // deserializes user
+    // deserializes user (default passport function)
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, user) {
             //console.log('deserializing user:', user);
